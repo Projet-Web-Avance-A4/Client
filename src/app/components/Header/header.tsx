@@ -5,23 +5,18 @@ import {
     NavbarItem
 } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, DropdownSection } from "@nextui-org/react";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, DropdownSection, Input } from "@nextui-org/react";
 import Link from "next/link";
+import './header.css';
 
 // Composant Header (entête)
 export default function Header() {
     return (
         <Navbar className="bg-red">
-            <NavbarBrand>
-                <p className="font-bold text-inherit">CES&apos;Eat</p>
-            </NavbarBrand>
-            <NavbarContent justify="center">
-                <p>Restaurateur</p>
+            <NavbarContent className="title">
+                <p>CES'EAT - Client</p>
             </NavbarContent>
-            <NavbarContent justify="end">
-                <NavbarItem className="hidden lg:flex">
-                    <Link href="#">Statistiques</Link>
-                </NavbarItem>
+            <NavbarContent className="test">
                 <NavbarItem>
                     <Dropdown className="text-black">
                         <DropdownTrigger>
@@ -33,7 +28,7 @@ export default function Header() {
                             </Button>
                         </DropdownTrigger>
                         <DropdownMenu variant="faded" aria-label="Account dropdown menu with description">
-                            <DropdownSection title="Actions" showDivider>
+                            <DropdownSection showDivider>
                                 <DropdownItem
                                     key="consult"
                                     description="Mes informations"
@@ -42,12 +37,18 @@ export default function Header() {
                                 </DropdownItem>
                                 <DropdownItem
                                     key="sponsor"
-                                    description="Parrainer un ami restaurateur"
+                                    description="Consulter l'historique des commandes"
+                                >
+                                    Commandes
+                                </DropdownItem>
+                                <DropdownItem
+                                    key="sponsor"
+                                    description="Parrainer un ami"
                                 >
                                     Parrainage
                                 </DropdownItem>
                             </DropdownSection>
-                            <DropdownSection title="Danger">
+                            <DropdownSection>
                                 <DropdownItem
                                     key="delete"
                                     className="text-danger"
