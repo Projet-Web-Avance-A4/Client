@@ -13,7 +13,7 @@ import React from 'react';
 import DeleteUserModal from "../deleteUserModal/deleteUserModal";
 import Image from 'next/image';
 import ceseat from "../../../../public/images/logo-ceseat.png";
-import { iHeader } from "@/app/interfaces/header";
+import { iHeader } from "../../Interfaces/header";
 import { useModal } from './utils';
 import SponsorModal from "../sponsor/sponsor";
 import { useEffect, useState } from 'react';
