@@ -1,9 +1,9 @@
 "use client";
 
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from "@nextui-org/react";
-import { Article } from "@/app/Interfaces/article";
+import { Article } from "@/app/interfaces/article";
 import { NextUIProvider } from "@nextui-org/system";
-import Header from "@/app/components/Header/header";
+import Header from "@/app/components/header/header";
 import { useEffect, useState } from "react";
 
 const ArticlesPage = () => {

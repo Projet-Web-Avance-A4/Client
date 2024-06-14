@@ -1,10 +1,11 @@
 "use client";
 
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from "@nextui-org/react";
-import { Menu } from "@/app/Interfaces/menu";
 import { NextUIProvider } from "@nextui-org/system";
-import Header from "@/app/components/Header/header";
-import { useEffect, useState } from "react";
+import Header from "@/app/components/header/header";
+import { useContext, useEffect, useState } from "react";
+import { Menu } from "@/app/interfaces/menu";
+import { CartContext } from "../context/cart";
 
 const MenuPage = () => {
     const [menuList, setMenuList] = useState<Menu[]>([]);
@@ -21,17 +22,25 @@ const MenuPage = () => {
             });
     }, []);
 
+    const { addToCart } = useContext(CartContext);
+
+    const handleAddToCart = (menu: Menu) => {
+        addToCart(menu);
+    };
+
     return (
-        <NextUIProvider>
+        <NextUIProvider className="h-full bg-beige">
             <Header />
-            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '16px', marginTop: '10px' }}>
+            <div className="flex justify-center flex-wrap gap-16 my-10 h-fit">
                 {menuList.map((menu: Menu) => (
-                    <Card key={menu.id_menu} className="max-w-[300px]" style={{ flex: '1 1 calc(33.333% - 16px)', boxSizing: 'border-box' }}>
-                        <CardHeader style={{ display: 'flex', justifyContent: 'center' }}>
-                            <p className="text-md">{menu.name_menu}</p>
+                    <Card key={menu.id_menu}>
+                        <CardHeader className="flex justify-center">
+                            <p className="text-md">
+                                {menu.name_menu}
+                            </p>
                         </CardHeader>
                         <Divider />
-                        <CardBody style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                        <CardBody className="flex justify-center items-center h-full">
                             <Image
                                 alt="menu logo"
                                 radius="sm"
@@ -41,16 +50,14 @@ const MenuPage = () => {
                         </CardBody>
                         <Divider />
                         <CardFooter>
-                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+                            <div className="flex justify-center items-center w-full">
                                 <p style={{ flex: '0 0 50%', margin: 0, textAlign: 'center' }}>{menu.price_menu} €</p>
-                                <Button color="primary" style={{ flex: '0 0 50%', margin: 0 }}>
-                                    Sélectionner
-                                </Button>
-                            </div>
-                        </CardFooter>
+                                <Button onClick={() => handleAddToCart(menu)}>Add to Cart</Button>
+                        </div>
+                    </CardFooter>
                     </Card>
                 ))}
-            </div>
+        </div>
         </NextUIProvider >
     );
 }

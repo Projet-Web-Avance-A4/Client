@@ -3,10 +3,11 @@
 import { NextUIProvider } from "@nextui-org/system";
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import Header from "../components/Header/header";
-import { Commande } from "../Interfaces/commande";
-import { Item } from "../Interfaces/item";
+import Header from "../components/header/header";
+import { Commande } from "../interfaces/commande";
+import { Item } from "../interfaces/item";
 import React from "react";
+import { Spinner } from "@nextui-org/react";
 
 const dividerStyle = {
     width: '1px',
@@ -73,7 +74,7 @@ const LivraisonPage = () => {
                     </CardBody>
                 </Card>
             ) : (
-                <p>Loading...</p>
+                <Spinner size="lg" />
             )}
         </NextUIProvider>
     )

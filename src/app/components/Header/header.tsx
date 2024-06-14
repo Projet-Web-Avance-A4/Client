@@ -1,22 +1,62 @@
-import {
-    Navbar,
-    NavbarBrand,
-    NavbarContent,
-    NavbarItem
-} from "@nextui-org/navbar";
+import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
-import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, DropdownSection, Input } from "@nextui-org/react";
-import Link from "next/link";
-import './header.css';
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, DropdownSection, Input, CardProvider } from "@nextui-org/react";
+import { Menu } from "@/app/interfaces/menu";
+import { Article } from "@/app/interfaces/article";
+import { CartContext } from "@/app/context/cart";
+import { useContext } from "react";
+import { CartProduct } from "@/app/interfaces/cart";
 
-// Composant Header (entête)
+
 export default function Header() {
+    const { cart } = useContext(CartContext);
+
+    const { removeFromCart } = useContext(CartContext);
+
+    const handleRemoveFromCart = (product: CartProduct) => {
+        removeFromCart(product);
+    };
+
     return (
         <Navbar className="bg-red">
-            <NavbarContent className="title">
+            <NavbarContent>
                 <p>CES'EAT - Client</p>
             </NavbarContent>
-            <NavbarContent className="test">
+            <NavbarContent>
+                <Dropdown>
+                    <DropdownTrigger>
+                        <Button variant="bordered">
+                            Cart
+                        </Button>
+                    </DropdownTrigger>
+                    <DropdownMenu aria-label="Static Actions">
+                        {cart.map(product => {
+                            if ('name_article' in product) {
+                                return (
+                                    <DropdownItem key={product.id_article} className="text-black">
+                                        <p className = "flex justify-start">{(product as Article).name_article}</p>
+                                        <Button onClick={() => removeFromCart(product)} className="">Supprimer</Button>
+                                    </DropdownItem>
+                                );
+                            } else if ('name_menu' in product) {
+                                return (
+                                    <DropdownItem key={product.id_menu} className="text-black">
+                                        {(product as Menu).name_menu}
+                                        <Button onClick={() => removeFromCart(product)} className="">Supprimer</Button>
+                                    </DropdownItem>
+                                );
+                            } else {
+                                return (
+                                    <DropdownItem className="text-black">
+                                        Le panier est vide
+                                    </DropdownItem>
+                                );
+                            }
+                        })}
+                    </DropdownMenu >
+                </Dropdown >
+            </NavbarContent >
+            <NavbarContent>
                 <NavbarItem>
                     <Dropdown className="text-black">
                         <DropdownTrigger>
@@ -62,6 +102,6 @@ export default function Header() {
                     </Dropdown>
                 </NavbarItem>
             </NavbarContent>
-        </Navbar>
+        </Navbar >
     );
 }

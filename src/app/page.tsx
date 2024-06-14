@@ -1,19 +1,18 @@
 "use client";
 
-import Image from "next/image";
-import Header from "./components/Header/header";
-import Link from "next/link";
-import { Button } from "@nextui-org/button";
-import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { NextUIProvider } from "@nextui-org/system";
+import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import { Button } from "@nextui-org/button";
+import Link from "next/link";
+import Header from "./components/header/header";
+import Footer from "./components/footer/footer";
 
 export default function Home() {
   return (
-    <NextUIProvider className="h-screen bg-beige">
-      <Header />
-      <div className="container mx-auto">
+      <NextUIProvider className="h-screen bg-beige">
+        <Header />
         <div className="flex flex-wrap place-content-center">
-          <Card className="m-8">
+          <Card className="w-96 m-8">
             <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
               <h4 className="font-bold text-large">Menu</h4>
               <small className="text-default-500">Consulter les différents menus</small>
@@ -59,7 +58,7 @@ export default function Home() {
             </CardBody>
           </Card>
         </div>
-      </div>
-    </NextUIProvider>
+        <Footer />
+      </NextUIProvider>
   );
 }
