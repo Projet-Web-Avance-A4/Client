@@ -14,7 +14,7 @@ export default function Header() {
     return (
         <Navbar className="bg-red">
             <NavbarContent className="title">
-                <p>CES'EAT - Client</p>
+                <p>CES&apos;EAT - Client</p>
             </NavbarContent>
             <NavbarContent className="test">
                 <NavbarItem>
