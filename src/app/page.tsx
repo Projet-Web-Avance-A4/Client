@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import { NextUIProvider } from "@nextui-org/system";
-import NotificationOrder from './components/newMenu/newMenu';
+import NotificationMenu from './components/newMenu/newMenu';
 
 export default function Home() {
   return (
@@ -61,7 +61,7 @@ export default function Home() {
           </Card>
         </div>
       </div>
-      <NotificationOrder />
+      <NotificationMenu />
     </NextUIProvider>
   );
 }

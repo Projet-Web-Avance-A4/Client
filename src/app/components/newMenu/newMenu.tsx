@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Notif from '../notification/notification';  
 
-const orderDone: React.FC = () => {
+const newMenu: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
@@ -34,5 +34,5 @@ const orderDone: React.FC = () => {
     );
 }
 
-export default orderDone;
+export default newMenu;
 
