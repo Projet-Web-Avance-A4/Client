@@ -9,69 +9,70 @@ import {
 import { Button } from "@nextui-org/button";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, DropdownSection } from "@nextui-org/react";
 import Link from "next/link";
-import React from 'react';
-import DeleteUserModal from "../deleteUserModal/deleteUserModal";
+import React, { useState } from 'react';
+import DeleteUserModal from "../deleteUserModal";
+import SponsorModal from "../sponsorModal"; // Assurez-vous que ce chemin est correct
 import Image from 'next/image';
-import ceseat from "../../../../public/images/logo-ceseat.png";
-import { iHeader } from "../../Interfaces/header";
-import { useModal } from './utils';
-import SponsorModal from "../sponsor/sponsor";
-import { useEffect, useState } from 'react';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import { User } from "@/app/interfaces/user";
+import ceseat from "../../../../public/logo-ceseat.png";
 
-export default function Header(props: iHeader) {
+interface User {
+    name: string;
+    surname: string;
+    street: string;
+    city: string;
+    postal_code: string;
+    phone: string;
+    mail: string;
+    role: string;
+}
 
-    const {  isDeleteModalOpen,
-        isSponsorModalOpen,
-        openDeleteModal,
-        closeDeleteModal,
-        openSponsorModal,
-        closeSponsorModal } = useModal();
+interface HeaderProps {
+    user?: User | null;
+    title?: string;
+    showMyAccount?: boolean;
+    showStats?: boolean;
+}
 
-        const [user, setUser] = useState<User | null>(null);
+export default function Header(props: HeaderProps) {
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isSponsorModalOpen, setIsSponsorModalOpen] = useState(false);
 
-        useEffect(() => {
-            const accessToken = localStorage.getItem('accessToken');
-            if (accessToken) {
-                const decodedToken = jwt.decode(accessToken);
-                if (decodedToken && typeof decodedToken !== 'string') {
-                    const data: JwtPayload = decodedToken;
-                    const userData: User = {
-                        name: data.name ?? '',
-                        surname: data.surname ?? '',
-                        street: data.street ?? '',
-                        city: data.city ?? '',
-                        postal_code: data.postal_code ?? '',
-                        phone: data.phone ?? '',
-                        mail: data.mail ?? '',
-                        role: data.role ?? '',
-                        code_referral: data.code_referral ?? '',
-                    };
-                    setUser(userData);
-                }
-            }
-        }, []);
+    function openDeleteModal() {
+        setIsDeleteModalOpen(true);
+    }
 
+    function closeDeleteModal() {
+        setIsDeleteModalOpen(false);
+    }
+
+    function openSponsorModal() {
+        setIsSponsorModalOpen(true);
+    }
+
+    function closeSponsorModal() {
+        setIsSponsorModalOpen(false);
+    }
 
     return (
         <Navbar className="bg-red">
             <NavbarBrand>
-                <Link href={"/main"}><p className="font-bold text-inherit ml-2 text-large flex items-center gap-2">
-                    <Image
-                        src={ceseat}
-                        width={50}
-                        height={50}
-                        alt="Logo Ceseat"
-                    />
-                     <span className="hidden md:block">CES&apos;Eat</span></p>
+                <Link href={"/main"}>
+                    <p className="font-bold text-inherit ml-2 text-large flex items-center gap-2">
+                        <Image
+                            src={ceseat}
+                            width={50}
+                            height={50}
+                            alt="Logo Ceseat"
+                        />
+                        CES&apos;Eat
+                    </p>
                 </Link>
             </NavbarBrand>
             <NavbarContent justify="center">
                 <p>{props.user?.role || props.title}</p>
             </NavbarContent>
             <NavbarContent justify="end">
-                {props.showStats && props.user?.role == 'Restaurateur' &&
+                {props.showStats && props.user?.role === 'Restaurateur' &&
                     <NavbarItem className="hidden lg:flex">
                         <Link href="#">Statistiques</Link>
                     </NavbarItem>
@@ -96,13 +97,15 @@ export default function Header(props: iHeader) {
                                     >
                                         Mon compte
                                     </DropdownItem>
-                                    <DropdownItem
-                                         key="sponsor"
-                                         onClick={openSponsorModal}
-                                         className="cursor-pointer text-blue-500 mr-2"
-                                    >
-                                        Parrainage
-                                    </DropdownItem>
+                                        <DropdownItem
+                                            key="sponsor"
+                                            description="Parrainer un ami"
+                                            title="Parrainer un ami"
+                                            onClick={openSponsorModal}
+                                            className="cursor-pointer text-blue-500 mr-2"
+                                        >
+                                            Parrainage
+                                        </DropdownItem>
                                 </DropdownSection>
                                 <DropdownSection title="Danger">
                                     <DropdownItem
@@ -110,9 +113,9 @@ export default function Header(props: iHeader) {
                                         className="text-danger"
                                         color="danger"
                                         description="Supprimer définitivement mon compte"
-                                        onClick={() => openDeleteModal()}
+                                        onClick={openDeleteModal}
                                     >
-                                        Effacer mon compte 
+                                        Effacer mon compte
                                     </DropdownItem>
                                 </DropdownSection>
                             </DropdownMenu>
@@ -121,7 +124,7 @@ export default function Header(props: iHeader) {
                 </NavbarItem>
             </NavbarContent>
             <DeleteUserModal userMail={props.user?.mail} isOpen={isDeleteModalOpen} closeModal={closeDeleteModal} />
-            <SponsorModal isOpen={isSponsorModalOpen} closeModal={closeSponsorModal} code={user?.code_referral}/>
+            <SponsorModal isOpen={isSponsorModalOpen} closeModal={closeSponsorModal} code="500"/>
         </Navbar>
     );
 }
