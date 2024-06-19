@@ -1,17 +1,22 @@
 "use client";
 
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from "@nextui-org/react";
-import { NextUIProvider } from "@nextui-org/system";
-import Header from "@/app/components/header/header";
 import { useContext, useEffect, useState } from "react";
 import { Menu } from "@/app/interfaces/menu";
-import { CartContext } from "../context/cart";
+import { CartContext } from "../contexts/cart.context";
+import { useHeader } from "../contexts/header.context";
 
 const MenuPage = () => {
     const [menuList, setMenuList] = useState<Menu[]>([]);
 
+    const { setShowMyAccount } = useHeader();
+
     useEffect(() => {
-        fetch('http://localhost:3001/api/menus')
+        setShowMyAccount(true);
+    }, []);
+
+    useEffect(() => {
+        fetch('http://localhost:4000/product/menu')
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
@@ -29,8 +34,6 @@ const MenuPage = () => {
     };
 
     return (
-        <NextUIProvider className="h-full bg-beige">
-            <Header />
             <div className="flex justify-center flex-wrap gap-16 my-10 h-fit">
                 {menuList.map((menu: Menu) => (
                     <Card key={menu.id_menu}>
@@ -58,7 +61,6 @@ const MenuPage = () => {
                     </Card>
                 ))}
         </div>
-        </NextUIProvider >
     );
 }
 

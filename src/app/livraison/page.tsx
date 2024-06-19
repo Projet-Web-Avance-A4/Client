@@ -1,26 +1,23 @@
 "use client";
 
-import { NextUIProvider } from "@nextui-org/system";
-import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from "@nextui-org/react";
+import { Card, CardBody, Divider } from "@nextui-org/react";
 import { useEffect, useState } from "react";
-import Header from "../components/header/header";
 import { Commande } from "../interfaces/commande";
-import { Item } from "../interfaces/item";
 import React from "react";
 import { Spinner } from "@nextui-org/react";
-
-const dividerStyle = {
-    width: '1px',
-    backgroundColor: 'black',
-    height: '100%',
-    margin: '0 8px'
-};
+import { useHeader } from "../contexts/header.context";
 
 const LivraisonPage = () => {
-    const [livraison, setLivraison] = useState<Commande>();
+    const [order, setOrder] = useState<Commande>();
+
+    const { setShowMyAccount } = useHeader();
 
     useEffect(() => {
-        fetch('http://localhost:3001/api/livraison', {
+        setShowMyAccount(true);
+    }, []);
+
+    useEffect(() => {
+        fetch('http://localhost:4000/order/inprogress', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -29,7 +26,7 @@ const LivraisonPage = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                setLivraison(data);
+                setOrder(data);
             })
             .catch((err) => {
                 console.log(err.message);
@@ -37,46 +34,52 @@ const LivraisonPage = () => {
     }, []);
 
     return (
-        <NextUIProvider>
-            <Header />
-            {livraison ? (
-                <Card className="max-w-[60%]" style={{ flex: '1 1 calc(33.333% - 16px)', boxSizing: 'border-box' }}>
-                    <CardBody style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
-                        {livraison.payment && livraison.payment.time_payment && (
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <p>
-                                    {new Date(livraison.payment.time_payment).toLocaleDateString('fr-FR', {
-                                        day: '2-digit',
-                                        month: '2-digit',
-                                        year: 'numeric'
-                                    })}
-                                </p>
-                                <div style={dividerStyle}></div>
-                            </div>
-                        )}
+        <div>
+            {order ? (
+                <div className="flex items-center justify-center">
+                    <div className="bg-beige p-16">
+                        <Card>
+                            <CardBody>
+                                {order.payment && order.payment.time_payment && (
+                                    <div className="text-center">
+                                        <p>
+                                            {new Date(order.payment.time_payment).toLocaleDateString('fr-FR', {
+                                                day: '2-digit',
+                                                month: '2-digit',
+                                                year: 'numeric'
+                                            })}
+                                        </p>
+                                    </div>
+                                )}
 
-                        {livraison.items.map((item: Item, index: number) => (
-                            <React.Fragment key={index}>
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <p>
-                                        {item.name}
+                                <Divider />
+
+                                {order.items.map((item, index) => (
+                                    <React.Fragment key={index}>
+                                        <div className="text-center">
+                                            <p>
+                                                Produit : {item.name}
+                                            </p>
+                                        </div>
+                                    </React.Fragment>
+                                ))}
+                                
+                                <Divider />
+
+                                <div>
+                                    <p className="text-center">
+                                        Prix : {order.price} €
                                     </p>
-                                    <div style={dividerStyle}></div>
                                 </div>
-                            </React.Fragment>
-                        ))}
-
-                        <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <p>
-                                {livraison.price} €
-                            </p>
-                        </div>
-                    </CardBody>
-                </Card>
+                            </CardBody>
+                        </Card>
+                    </div>
+                </div>
             ) : (
-                <Spinner size="lg" />
-            )}
-        </NextUIProvider>
+                <div className="h-screen flex items-center justify-center">
+                    <Spinner size="lg" />
+                </div>)}
+        </div>
     )
 }
 

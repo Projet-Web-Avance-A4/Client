@@ -1,25 +1,26 @@
 "use client";
 
-import { NextUIProvider } from "@nextui-org/system";
-import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Image, Link, Spinner } from "@nextui-org/react";
-import { useEffect, useState } from "react";
-import Header from "../components/header/header";
+import { Card, CardBody, CardFooter, CardHeader, Divider, Image, Link, Spinner } from "@nextui-org/react";
+import { useContext, useEffect, useState } from "react";
 import { Commande } from "../interfaces/commande";
 import { Item } from "../interfaces/item";
 import React from "react";
-
-const dividerStyle = {
-    width: '1px',
-    backgroundColor: 'black',
-    height: '100%',
-    margin: '0 8px'
-};
+import { useHeader } from "../contexts/header.context";
+import { UserContext } from "../contexts/user.context";
 
 const CommandesPage = () => {
     const [commandesList, setCommandesList] = useState<Commande[]>([]);
 
+    const { setShowMyAccount } = useHeader();
+
+    const {userData} = useContext(UserContext);
+
     useEffect(() => {
-        fetch('http://localhost:3001/api/commandes', {
+        setShowMyAccount(true);
+    }, []);
+
+    useEffect(() => {
+        fetch('http://localhost:4000/order/list', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -28,6 +29,7 @@ const CommandesPage = () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                console.log(data)
                 setCommandesList(data);
             })
             .catch((err) => {
@@ -36,16 +38,15 @@ const CommandesPage = () => {
     }, []);
 
     return (
-        <NextUIProvider>
-            <Header />
+        <div>
             {commandesList ? (
 
                 commandesList.map((commande: Commande) => (
-                    <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '16px' }} key={commande.id_order}>
-                        <Card className="max-w-[60%]" style={{ flex: '1 1 calc(33.333% - 16px)', boxSizing: 'border-box' }}>
-                            <CardBody style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                    <div key={commande.id_order}>
+                        <Card className="max-w-[60%]">
+                            <CardBody>
                                 {commande.payment.time_payment && (
-                                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <div>
                                         <p>
                                             {new Date(commande.payment.time_payment).toLocaleDateString('fr-FR', {
                                                 day: '2-digit',
@@ -53,22 +54,20 @@ const CommandesPage = () => {
                                                 year: 'numeric'
                                             })}
                                         </p>
-                                        <div style={dividerStyle}></div>
                                     </div>
                                 )}
 
                                 {commande.items.map((item: Item, index: number) => (
                                     <React.Fragment key={item.id}>
-                                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                                        <div>
                                             <p>
                                                 {item.name}
                                             </p>
-                                            <div style={dividerStyle}></div>
                                         </div>
                                     </React.Fragment>
                                 ))}
 
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                <div>
                                     <p>
                                         {commande.price} €
                                     </p>
@@ -80,7 +79,7 @@ const CommandesPage = () => {
             ) : (
                 <Spinner size="lg" />
             )}
-        </NextUIProvider >
+        </div>
     )
 }
 
