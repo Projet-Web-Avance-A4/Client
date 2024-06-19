@@ -1,3 +1,4 @@
+import { User } from '@/app/interfaces/user';
 import { useState } from 'react';
 
 export const useModal = () => {
