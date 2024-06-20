@@ -10,7 +10,7 @@ import { NextUIProvider } from "@nextui-org/system";
 export default function Home() {
   return (
     <NextUIProvider className="h-screen bg-beige">
-      <Header />
+      <Header showMyAccount={true} />
       <div className="container mx-auto">
         <div className="flex flex-wrap place-content-center">
           <Card className="m-8">
