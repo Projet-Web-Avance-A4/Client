@@ -8,19 +8,12 @@ import { Spinner } from "@nextui-org/react";
 import { useHeader } from "../contexts/header.context";
 import { UserContext } from "../contexts/user.context";
 import { decodeAccessToken } from "./utils";
+import { Item } from "../Interfaces/item";
 
 const LivraisonPage = () => {
     const [order, setOrder] = useState<Commande>();
 
     const { setShowMyAccount } = useHeader();
-
-    if (typeof window !== 'undefined') {
-        const storedValue = localStorage.getItem('myItem');
-        // ...
-    } else {
-        // Gérer le cas où localStorage n'est pas disponible (côté serveur)
-        console.warn('localStorage is not available in this environment');
-    }
 
     useEffect(() => {
         setShowMyAccount(true);
@@ -36,6 +29,13 @@ const LivraisonPage = () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                data.items = data.items.map((item: Item) => {
+                    return {
+                        id: item.id_dish ?? item.id_menu ?? item.id_article,
+                        name: item.name_menu ?? item.name_article,
+                        price: item.price_menu ?? item.price_article
+                    };
+                });
                 setOrder(data);
             })
             .catch((err) => {
@@ -50,10 +50,10 @@ const LivraisonPage = () => {
                     <div className="bg-beige p-16">
                         <Card>
                             <CardBody>
-                                {order.payment && order.payment.time_payment && (
+                                {order.payment && order.payment.payment_time && (
                                     <div className="text-center">
                                         <p>
-                                            {new Date(order.payment.time_payment).toLocaleDateString('fr-FR', {
+                                            {new Date(order.payment.payment_time).toLocaleDateString('fr-FR', {
                                                 day: '2-digit',
                                                 month: '2-digit',
                                                 year: 'numeric'
@@ -73,12 +73,12 @@ const LivraisonPage = () => {
                                         </div>
                                     </React.Fragment>
                                 ))}
-                                
+
                                 <Divider />
 
                                 <div>
                                     <p className="text-center">
-                                        Prix : {order.price} €
+                                        Prix : {order.total_price} €
                                     </p>
                                 </div>
                             </CardBody>

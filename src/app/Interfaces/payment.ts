@@ -1,11 +1,11 @@
 export interface Payment {
-    id_payment: string;
+    method: string;
 
-    amount: string;
+    transaction_id: number;
+    
+    amount: number;
 
     currency: string;
 
-    method: string;
-
-    time_payment: Date;
+    payment_time: Date;
 }

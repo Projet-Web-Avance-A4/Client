@@ -22,6 +22,7 @@ const CommandesPage = () => {
         const accessToken = localStorage.getItem('accessToken')
         const userData = decodeAccessToken(accessToken)
         const id = userData?.id_user;
+        console.log(id);
         fetch('http://localhost:4000/order/list', {
             method: 'POST',
             headers: {
@@ -31,6 +32,15 @@ const CommandesPage = () => {
         })
             .then((response) => response.json())
             .then((data) => {
+                data.forEach((order: Commande) => {
+                    order.items = order.items.map((item) => {
+                        return {
+                            id: item.id_dish ?? item.id_menu ?? item.id_article,
+                            name: item.name_menu ?? item.name_article,
+                            price: item.price_menu ?? item.price_article
+                        };
+                    });
+                });
                 setCommandesList(data);
             })
             .catch((err) => {
@@ -43,13 +53,13 @@ const CommandesPage = () => {
             {commandesList ? (
 
                 commandesList.map((commande: Commande) => (
-                    <div key={commande.id_order}>
+                    <div key={commande.order_id}>
                         <Card className="max-w-[60%]">
                             <CardBody>
-                                {commande.payment.time_payment && (
+                                {commande.payment.payment_time && (
                                     <div>
                                         <p>
-                                            {new Date(commande.payment.time_payment).toLocaleDateString('fr-FR', {
+                                            {new Date(commande.payment.payment_time).toLocaleDateString('fr-FR', {
                                                 day: '2-digit',
                                                 month: '2-digit',
                                                 year: 'numeric'
@@ -58,11 +68,11 @@ const CommandesPage = () => {
                                     </div>
                                 )}
 
-                                {commande.items.map((item: Item, index: number) => (
+                                {commande.items.map((item: Item) => (
                                     <React.Fragment key={item.id}>
                                         <div>
                                             <p>
-                                                {item.name}
+                                                Produit : {item.name}
                                             </p>
                                         </div>
                                     </React.Fragment>
@@ -70,7 +80,7 @@ const CommandesPage = () => {
 
                                 <div>
                                     <p>
-                                        {commande.price} €
+                                        Prix : {commande.total_price} €
                                     </p>
                                 </div>
                             </CardBody>
