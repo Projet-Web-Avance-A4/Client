@@ -1,16 +1,15 @@
 export interface iPortalCard {
-    btnText: string;
-    href: string;
-    port: string;
+    btnText: string
+    href: string
+    port: string
 }
 
 export interface iCustomCard {
-    title: string;
-    description?: string;
-    href?: string;
-    btnText?: string;
-    onClick?: () => void;
-}
+    title: string
+    description?: string
+    href: string
+    btnText: string
+  }
 
 export interface ComponentListProps {
     components: string[];

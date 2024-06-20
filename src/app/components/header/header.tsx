@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import ceseat from "../../../../public/images/logo-ceseat.png";
 import DeleteUserModal from "../deleteUserModal/deleteUserModal";
+import { useModal } from './utils';
 import { useHeader } from '../../contexts/header.context';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
@@ -14,7 +15,6 @@ import { useContext } from "react";
 import { CartProduct } from "@/app/Interfaces/cart";
 import { FaTrashCan } from "react-icons/fa6";
 import Link from "next/link";
-import { useModal } from './utils';
 
 export default function Header() {
     const { user, showMyAccount } = useHeader();
