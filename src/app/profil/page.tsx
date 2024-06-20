@@ -96,9 +96,9 @@ export default function AccountInfo() {
                             </div>
                         </CardHeader>
                         <CardBody>
-                            {/* {user && (
+                            {user && (
                                 <div className="grid grid-flow-row-dense auto-cols-max grid-cols-2 gap-5 p-3">
-                                    {Object.keys(user).filter((key) => key !== 'role' && key!== 'id_user').map((field) => (
+                                    {Object.keys(user).filter((key) => key !== 'role' && key !== 'id_user').map((field) => (
                                         <div key={field} className={field === 'mail' ? "col-span-2" : ""}>
                                             {isEditing ? (
                                                 <Input
@@ -109,7 +109,7 @@ export default function AccountInfo() {
                                                     size="md"
                                                     type="text"
                                                     name={field}
-                                                    value={isEditing ? modifiedUser?.[field as keyof User] ?? '' : user?.[field as keyof User] ?? ''}
+                                                    value={isEditing ? (modifiedUser?.[field as keyof User])?.toString() ?? '' : (user?.[field as keyof User]).toString() ?? ''}
                                                     onChange={handleInputChangeWrapper}
                                                 />
                                             ) : (
@@ -123,7 +123,7 @@ export default function AccountInfo() {
                                         </div>
                                     ))}
                                 </div>
-                            )} */}
+                            )}
                             <div className="flex justify-center space-x-4 mt-6 mb-6">
                                 <Button
                                     className="bg-beige shadow min-w-[150px]"
