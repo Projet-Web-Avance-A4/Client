@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Notif from '../notification/notification';  
 
-const newMenu: React.FC = () => {
+const NewMenu: React.FC = () => {
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
@@ -34,5 +34,4 @@ const newMenu: React.FC = () => {
     );
 }
 
-export default newMenu;
-
+export default NewMenu;

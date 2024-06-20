@@ -1,4 +1,5 @@
 export interface User {
+    id_user: number;
     name: string;
     surname: string;
     street: string;
@@ -7,10 +8,10 @@ export interface User {
     phone: string;
     mail: string;
     role: string;
-    code_referral: string;
 }
 
 export const fieldLabels: { [key in keyof User]: string } = {
+    id_user : 'Identifiant',
     name: 'Prénom',
     surname: 'Nom',
     street: 'Rue',
@@ -18,8 +19,7 @@ export const fieldLabels: { [key in keyof User]: string } = {
     postal_code: 'Code Postal',
     phone: 'Téléphone',
     mail: 'Mail',
-    role: 'Rôle',
-    code_referral: 'Code Parrainage'
+    role: 'Rôle'
 };
 
 export interface deleteUserModalProps {
