@@ -2,7 +2,7 @@
 
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from "@nextui-org/react";
 import { useContext, useEffect, useState } from "react";
-import { Menu } from "@/app/interfaces/menu";
+import { Menu } from "@/app/Interfaces/menu";
 import { CartContext } from "../contexts/cart.context";
 import { useHeader } from "../contexts/header.context";
 

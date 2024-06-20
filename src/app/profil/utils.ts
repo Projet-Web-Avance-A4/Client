@@ -1,5 +1,5 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { User } from "../interfaces/user";
+import { User } from "../Interfaces/user";
 import { ChangeEvent } from "react";
 
 export const generateNewAccessToken = (refreshToken: string) => {
@@ -29,6 +29,7 @@ export const verifyAndSetUser = (accessToken: string, setUser: (user: User) => v
         if (typeof verifiedData !== 'string') {
             const data: JwtPayload = verifiedData;
             const userData: User = {
+                id_user: data.userId ?? 0,
                 name: data.name ?? '',
                 surname: data.surname ?? '',
                 street: data.street ?? '',
@@ -91,6 +92,7 @@ export const handleInputChange = (
         });
     } else {
         setModifiedUser({
+            id_user: 0,
             name: '',
             surname: '',
             street: '',

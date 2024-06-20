@@ -1,8 +1,8 @@
 "use client";
 
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { userContextType } from '../interfaces/usercontexttype';
-import { User } from '../interfaces/user';
+import { userContextType } from '../Interfaces/usercontexttype';
+import { User } from '../Interfaces/user';
 
 const UserContext = createContext<userContextType>({
   userData: {

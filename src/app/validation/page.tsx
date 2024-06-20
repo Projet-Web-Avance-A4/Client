@@ -12,10 +12,9 @@ export default function Validation() {
 
     const { cart, clearCart } = useContext(CartContext);
 
-    const accessToken = localStorage.getItem('accessToken')
-    const userData = decodeAccessToken(accessToken)
-
     async function validatePayment() {
+        const accessToken = localStorage.getItem('accessToken')
+        const userData = decodeAccessToken(accessToken)
         setLoading(true);
 
         await new Promise(resolve => setTimeout(resolve, 1000));

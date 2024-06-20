@@ -1,10 +1,10 @@
 "use client";
 
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from "@nextui-org/react";
-import { Article } from "@/app/interfaces/article";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../contexts/cart.context";
 import { useHeader } from "../contexts/header.context";
+import { Article } from "../Interfaces/article";
 
 const ArticlesPage = () => {
     const [articleList, setArticleList] = useState<Article[]>([]);
@@ -13,7 +13,7 @@ const ArticlesPage = () => {
 
     useEffect(() => {
         setShowMyAccount(true);
-    }, []);
+    }, [setShowMyAccount]);
 
     useEffect(() => {
         fetch('http://localhost:4000/product/article')

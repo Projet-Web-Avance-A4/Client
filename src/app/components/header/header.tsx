@@ -8,11 +8,11 @@ import { useHeader } from '../../contexts/header.context';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, DropdownSection, Input, CardProvider } from "@nextui-org/react";
-import { Menu } from "@/app/interfaces/menu";
-import { Article } from "@/app/interfaces/article";
+import { Menu } from "@/app/Interfaces/menu";
+import { Article } from "@/app/Interfaces/article";
 import { CartContext } from "@/app/contexts/cart.context";
 import { useContext } from "react";
-import { CartProduct } from "@/app/interfaces/cart";
+import { CartProduct } from "@/app/Interfaces/cart";
 import { FaTrashCan } from "react-icons/fa6";
 import Link from "next/link";
 

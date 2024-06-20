@@ -2,7 +2,7 @@
 
 import { Button } from "@nextui-org/button";
 import { Card, CardBody } from "@nextui-org/card";
-import { iPortalCard } from "@/app/interfaces/card";
+import { iPortalCard } from "@/app/Interfaces/card";
 import { handleRedirect } from './utils';
 
 export default function PortalCard(props: iPortalCard) {

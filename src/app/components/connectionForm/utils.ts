@@ -1,4 +1,4 @@
-import { User } from '@/app/interfaces/user';
+import { User } from '@/app/Interfaces/user';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { useState, useEffect } from 'react';
 import React from 'react';

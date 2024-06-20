@@ -4,11 +4,11 @@ import { useEffect, useState, ChangeEvent } from "react";
 import { useRouter } from 'next/navigation';
 import { Input, Spacer } from "@nextui-org/react";
 import { Alert } from "@mui/material";
-import { User, fieldLabels } from "../interfaces/user";
 import { isUserDataValid, handleTokenVerification, handleInputChange, sendModifiedData, sendModifiedPassword } from "./utils";
 import { useHeader } from '../contexts/header.context';
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
+import { User, fieldLabels } from "../Interfaces/user";
 
 export default function AccountInfo() {
     const { user, setUser, setShowMyAccount, setShowSponsor, setShowStats } = useHeader();
@@ -96,7 +96,7 @@ export default function AccountInfo() {
                             </div>
                         </CardHeader>
                         <CardBody>
-                            {user && (
+                            {/* {user && (
                                 <div className="grid grid-flow-row-dense auto-cols-max grid-cols-2 gap-5 p-3">
                                     {Object.keys(user).filter((key) => key !== 'role' && key!== 'id_user').map((field) => (
                                         <div key={field} className={field === 'mail' ? "col-span-2" : ""}>
@@ -123,7 +123,7 @@ export default function AccountInfo() {
                                         </div>
                                     ))}
                                 </div>
-                            )}
+                            )} */}
                             <div className="flex justify-center space-x-4 mt-6 mb-6">
                                 <Button
                                     className="bg-beige shadow min-w-[150px]"

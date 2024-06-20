@@ -1,5 +1,5 @@
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { User } from "../interfaces/user";
+import { User } from "../Interfaces/user";
 
 export const decodeAccessToken = (accessToken: string | null) => {
     if (accessToken) {

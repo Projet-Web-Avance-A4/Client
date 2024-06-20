@@ -2,27 +2,26 @@
 
 import { Card, CardBody, CardFooter, CardHeader, Divider, Image, Link, Spinner } from "@nextui-org/react";
 import { useContext, useEffect, useState } from "react";
-import { Commande } from "../interfaces/commande";
-import { Item } from "../interfaces/item";
 import React from "react";
 import { useHeader } from "../contexts/header.context";
 import { UserContext } from "../contexts/user.context";
 import { decodeAccessToken } from "./utils";
+import { Commande } from "../Interfaces/commande";
+import { Item } from "../Interfaces/item";
 
 const CommandesPage = () => {
     const [commandesList, setCommandesList] = useState<Commande[]>([]);
 
     const { setShowMyAccount } = useHeader();
 
-    const accessToken = localStorage.getItem('accessToken')
-    const userData = decodeAccessToken(accessToken)
-    const id = userData?.id_user;
-
     useEffect(() => {
         setShowMyAccount(true);
-    }, []);
+    }, [setShowMyAccount]);
 
     useEffect(() => {
+        const accessToken = localStorage.getItem('accessToken')
+        const userData = decodeAccessToken(accessToken)
+        const id = userData?.id_user;
         fetch('http://localhost:4000/order/list', {
             method: 'POST',
             headers: {
@@ -32,7 +31,6 @@ const CommandesPage = () => {
         })
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
                 setCommandesList(data);
             })
             .catch((err) => {

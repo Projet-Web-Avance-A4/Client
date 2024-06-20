@@ -11,7 +11,7 @@ export default function Home() {
 
     useEffect(() => {
         setShowMyAccount(true);
-    }, []);
+    }, [setShowMyAccount]);
     
     return (
         <div className="flex flex-wrap place-content-center">

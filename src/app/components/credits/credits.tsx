@@ -1,6 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
-import { LegalModalProps } from '@/app/interfaces/footer';
+import { LegalModalProps } from '@/app/Interfaces/footer';
 
 const LegalModal: React.FC<LegalModalProps> = ({ isOpen, closeModal }) => {
   return (

@@ -1,7 +1,7 @@
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import Link from "next/link";
-import { iCustomCard } from "@/app/interfaces/card";
+import { iCustomCard } from "@/app/Interfaces/card";
 
 export default function CustomCard(props: iCustomCard) {
   return (

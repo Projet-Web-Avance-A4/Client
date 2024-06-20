@@ -2,7 +2,7 @@
 
 import { Card, CardBody, Divider } from "@nextui-org/react";
 import { useContext, useEffect, useState } from "react";
-import { Commande } from "../interfaces/commande";
+import { Commande } from "../Interfaces/commande";
 import React from "react";
 import { Spinner } from "@nextui-org/react";
 import { useHeader } from "../contexts/header.context";
@@ -14,15 +14,19 @@ const LivraisonPage = () => {
 
     const { setShowMyAccount } = useHeader();
 
-    const accessToken = localStorage.getItem('accessToken')
-    const userData = decodeAccessToken(accessToken)
-    const id = userData?.id_user;
+    if (typeof window !== 'undefined') {
+        const storedValue = localStorage.getItem('myItem');
+        // ...
+    } else {
+        // Gérer le cas où localStorage n'est pas disponible (côté serveur)
+        console.warn('localStorage is not available in this environment');
+    }
 
     useEffect(() => {
         setShowMyAccount(true);
-    }, []);
-
-    useEffect(() => {
+        const accessToken = localStorage.getItem('accessToken')
+        const userData = decodeAccessToken(accessToken)
+        const id = userData?.id_user;
         fetch('http://localhost:4000/order/inprogress', {
             method: 'POST',
             headers: {

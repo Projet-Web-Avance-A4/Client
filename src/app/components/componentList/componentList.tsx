@@ -1,5 +1,5 @@
 import React from 'react';
-import { ComponentListProps } from '@/app/interfaces/card';
+import { ComponentListProps } from '@/app/Interfaces/card';
 
 const ComponentList: React.FC<ComponentListProps> = ({ components }) => {
   return (

@@ -1,8 +1,8 @@
 'use client';
 
 import { createContext, useContext, ReactNode, useState } from "react";
-import { User } from "../interfaces/user";
-import { HeaderContextProps } from "../interfaces/header";
+import { User } from "../Interfaces/user";
+import { HeaderContextProps } from "../Interfaces/header";
 
 const HeaderContext = createContext<HeaderContextProps | undefined>(undefined);
 
