@@ -5,7 +5,7 @@ import { CartProvider } from "./contexts/cart.context";
 import Footer from "./components/footer/footer";
 import { NextUIProvider } from "@nextui-org/system";
 import { HeaderProvider } from "./contexts/header.context";
-import Header from "./components/header/header";
+import Header from "./components/Header/header";
 import { UserProvider } from "./contexts/user.context";
 
 const inter = Inter({ subsets: ["latin"] });
