@@ -6,7 +6,7 @@ import { Input, Spacer } from "@nextui-org/react";
 import { Alert } from "@mui/material";
 import { User, fieldLabels } from "../interfaces/user";
 import { isUserDataValid, handleTokenVerification, handleInputChange, sendModifiedData, sendModifiedPassword } from "./utils";
-import { useHeader } from '../hooks/useHeader';
+import { useHeader } from '../contexts/header.context';
 import { Button } from "@nextui-org/button";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 
@@ -98,7 +98,7 @@ export default function AccountInfo() {
                         <CardBody>
                             {user && (
                                 <div className="grid grid-flow-row-dense auto-cols-max grid-cols-2 gap-5 p-3">
-                                    {Object.keys(user).filter((key) => key !== 'role').map((field) => (
+                                    {Object.keys(user).filter((key) => key !== 'role' && key!== 'id_user').map((field) => (
                                         <div key={field} className={field === 'mail' ? "col-span-2" : ""}>
                                             {isEditing ? (
                                                 <Input

@@ -7,13 +7,16 @@ import { Item } from "../interfaces/item";
 import React from "react";
 import { useHeader } from "../contexts/header.context";
 import { UserContext } from "../contexts/user.context";
+import { decodeAccessToken } from "./utils";
 
 const CommandesPage = () => {
     const [commandesList, setCommandesList] = useState<Commande[]>([]);
 
     const { setShowMyAccount } = useHeader();
 
-    const {userData} = useContext(UserContext);
+    const accessToken = localStorage.getItem('accessToken')
+    const userData = decodeAccessToken(accessToken)
+    const id = userData?.id_user;
 
     useEffect(() => {
         setShowMyAccount(true);
@@ -25,7 +28,7 @@ const CommandesPage = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ customer_id: 1 })
+            body: JSON.stringify({ id })
         })
             .then((response) => response.json())
             .then((data) => {

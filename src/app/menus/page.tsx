@@ -19,7 +19,6 @@ const MenuPage = () => {
         fetch('http://localhost:4000/product/menu')
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 setMenuList(data);
             })
             .catch((err) => {

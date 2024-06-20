@@ -1,3 +1,5 @@
+import { User } from '@/app/interfaces/user';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { useState, useEffect } from 'react';
 import React from 'react';
 
@@ -40,8 +42,7 @@ export const handleSubmit = async (
             const { accessToken, refreshToken } = await response.json();
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
-
-            window.location.href = '/telechargements';
+            window.location.href = 'accueil'
         } else {
             setAlertMessage('Échec de la connexion au compte');
             setAlertType('error');

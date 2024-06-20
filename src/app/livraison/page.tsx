@@ -1,16 +1,22 @@
 "use client";
 
 import { Card, CardBody, Divider } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Commande } from "../interfaces/commande";
 import React from "react";
 import { Spinner } from "@nextui-org/react";
 import { useHeader } from "../contexts/header.context";
+import { UserContext } from "../contexts/user.context";
+import { decodeAccessToken } from "./utils";
 
 const LivraisonPage = () => {
     const [order, setOrder] = useState<Commande>();
 
     const { setShowMyAccount } = useHeader();
+
+    const accessToken = localStorage.getItem('accessToken')
+    const userData = decodeAccessToken(accessToken)
+    const id = userData?.id_user;
 
     useEffect(() => {
         setShowMyAccount(true);
@@ -22,7 +28,7 @@ const LivraisonPage = () => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ customer_id: 1 })
+            body: JSON.stringify({ id })
         })
             .then((response) => response.json())
             .then((data) => {

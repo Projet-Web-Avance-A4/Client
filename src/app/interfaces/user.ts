@@ -1,5 +1,5 @@
 export interface User {
-    id: number;
+    id_user: number;
     name: string;
     surname: string;
     street: string;
@@ -11,7 +11,7 @@ export interface User {
 }
 
 export const fieldLabels: { [key in keyof User]: string } = {
-    id : 'Identifiant',
+    id_user : 'Identifiant',
     name: 'Prénom',
     surname: 'Nom',
     street: 'Rue',
@@ -26,16 +26,4 @@ export interface deleteUserModalProps {
     isOpen: boolean;
     closeModal: () => void;
     userMail?: string;
-}
-
-export interface UserData {
-    id: number;
-    name: string;
-    surname: string;
-    street: string;
-    city: string;
-    postal_code: string;
-    phone: string;
-    mail: string;
-    role: string;
 }

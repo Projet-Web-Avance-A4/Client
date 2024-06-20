@@ -9,14 +9,17 @@ const HeaderContext = createContext<HeaderContextProps | undefined>(undefined);
 export const HeaderProvider = ({ children }: { children: ReactNode }) => {
     const [user, setUser] = useState<User | null>(null);
     const [showMyAccount, setShowMyAccount] = useState<boolean>(false);
+    const [showStats, setShowStats] = useState<boolean>(false);
     const [showSponsor, setShowSponsor] = useState<boolean>(false);
 
     const contextValue: HeaderContextProps = {
         user,
         showMyAccount,
+        showStats,
         showSponsor,
         setUser,
         setShowMyAccount,
+        setShowStats,
         setShowSponsor
     };
 

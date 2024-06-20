@@ -4,14 +4,16 @@ import { Button, Chip, Input, Spinner } from "@nextui-org/react";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../contexts/cart.context";
 import { UserContext } from "../contexts/user.context";
+import { decodeAccessToken } from "./utils";
 
 export default function Validation() {
     const [loading, setLoading] = useState<boolean>(false);
     const [isOrderPayed, setOrder] = useState<boolean>(false);
-    const [paymentValidated, setPaymentValidated] = useState<boolean>(false);
 
     const { cart, clearCart } = useContext(CartContext);
-    const { userData } = useContext(UserContext);
+
+    const accessToken = localStorage.getItem('accessToken')
+    const userData = decodeAccessToken(accessToken)
 
     async function validatePayment() {
         setLoading(true);
@@ -23,28 +25,18 @@ export default function Validation() {
 
         await new Promise(resolve => setTimeout(resolve, 1000));
 
-        setPaymentValidated(true);
+        await fetch('http://localhost:4000/order/creation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ userData, cart })
+        })
+        clearCart();
+        window.location.assign('accueil');
     }
 
-    useEffect(() => {
-        if (paymentValidated) {
-            fetch('http://localhost:4000/order/creation', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ userData, cart })
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    clearCart();
-                    window.location.assign('accueil');
-                })
-                .catch((err) => {
-                    console.log(err.message);
-                });
-        }
-    }, [paymentValidated, cart, userData, clearCart]);
+
 
     return (
         <div>

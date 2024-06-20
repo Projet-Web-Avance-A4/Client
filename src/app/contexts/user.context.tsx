@@ -6,7 +6,7 @@ import { User } from '../interfaces/user';
 
 const UserContext = createContext<userContextType>({
   userData: {
-    id: 0,
+    id_user: 0,
     name: '',
     surname: '',
     street: '',
@@ -22,8 +22,8 @@ const UserContext = createContext<userContextType>({
 export { UserContext };
 
 export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [userData, setUser] = useState<User | undefined>({
-    id: 0,
+  const [userData, setUser] = useState<User | null>({
+    id_user: 0,
     name: '',
     surname: '',
     street: '',
@@ -34,7 +34,7 @@ export const UserProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     role: ''
   });
 
-  const getUserData = (user: User | undefined) => {
+  const getUserData = (user: User | null) => {
     setUser(user);
   };
 
