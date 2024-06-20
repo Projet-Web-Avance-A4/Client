@@ -3,22 +3,23 @@
 import Image from 'next/image';
 import ceseat from "../../../../public/images/logo-ceseat.png";
 import DeleteUserModal from "../deleteUserModal/deleteUserModal";
-import { useModal } from './utils';
 import { useHeader } from '../../contexts/header.context';
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@nextui-org/navbar";
 import { Button } from "@nextui-org/button";
 import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, DropdownSection, Input, CardProvider } from "@nextui-org/react";
-import { Menu } from "@/app/interfaces/menu";
-import { Article } from "@/app/interfaces/article";
+import { Menu } from "@/app/Interfaces/menu";
+import { Article } from "@/app/Interfaces/article";
 import { CartContext } from "@/app/contexts/cart.context";
 import { useContext } from "react";
-import { CartProduct } from "@/app/interfaces/cart";
+import { CartProduct } from "@/app/Interfaces/cart";
 import { FaTrashCan } from "react-icons/fa6";
 import Link from "next/link";
+import { useModal } from './utils';
 
 export default function Header() {
     const { user, showMyAccount } = useHeader();
     const { isModalOpen, openModal, closeModal } = useModal();
+    const appRole = process.env.NEXT_PUBLIC_APP;
     const { cart, removeFromCart } = useContext(CartContext);
     const handleRemoveFromCart = (product: CartProduct) => {
         removeFromCart(product);
@@ -27,7 +28,7 @@ export default function Header() {
     return (
         <Navbar className="bg-red">
             <NavbarBrand>
-                <Link href={"/"}>
+                <Link href={"/accueil"}>
                     <p className="font-bold text-inherit ml-2 text-large flex items-center gap-2">
                         <Image
                             src={ceseat}
@@ -35,19 +36,19 @@ export default function Header() {
                             height={50}
                             alt="Logo Ceseat"
                         />
-                        CES&apos;Eat
+                        <span className='hidden lg:inline'>CES&apos;Eat</span>
                     </p>
                 </Link>
             </NavbarBrand>
             <NavbarContent justify="center">
-                <p>{user?.role || "CES'Eat"}</p>
+                <p>{user?.role || appRole}</p>
             </NavbarContent>
 
             {showMyAccount &&
-                <NavbarContent>
+                <NavbarContent justify="end">
                     <Dropdown>
                         <DropdownTrigger>
-                            <Button variant="bordered">
+                            <Button variant="bordered" className=''>
                                 Cart
                             </Button>
                         </DropdownTrigger>
@@ -93,7 +94,7 @@ export default function Header() {
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                                     </svg>
-                                    Mon compte
+                                    <span className='hidden lg:inline'>Mon compte</span>
                                 </Button>
                             </DropdownTrigger>
                             <DropdownMenu variant="faded" aria-label="Account dropdown menu with description">
