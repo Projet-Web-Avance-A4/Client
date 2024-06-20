@@ -1,35 +1,20 @@
 import { Button } from "@nextui-org/button";
-import { NextUIProvider } from "@nextui-org/react";
 import { Card, CardBody, CardHeader } from "@nextui-org/card";
 import Link from "next/link";
-import { ReactNode } from "react";
-import React from "react";
-
-interface iCustomCard {
-  title: string
-  description?: string
-  href: string
-  btnText: string
-  icon?: ReactNode
-}
+import { iCustomCard } from "@/app/Interfaces/card";
 
 export default function CustomCard(props: iCustomCard) {
-
-    return (
-        <NextUIProvider>
-            <Card className="m-8 h-46">
-              <CardHeader className="pb-0 pt-2 px-4 flex-col items-start h-30">
-                <div>
-                <h4 className="font-bold text-lg xl:text-3xl flex items-center gap-2 h-24">{props.icon}{props.title}</h4>
-                <p className="text-default-500">{props.description}</p>
-                </div>
-              </CardHeader>
-              <CardBody>
-                <Button as={Link} href={props.href}>
-                  <p>{props.btnText}</p>
-                </Button>
-              </CardBody>
-            </Card>
-        </NextUIProvider>
-    );
+  return (
+    <Card className="m-6 w-full h-full flex flex-col justify-between">
+      <CardHeader className="pb-4 pt-2 px-4 flex-col items-center">
+        <h4 className="font-bold text-large">{props.title}</h4>
+        <p className="text-default-500">{props.description}</p>
+      </CardHeader>
+      <CardBody className="flex justify-center items-center">
+        <Button as={Link} href={props.href} className="btn bg-beige shadow min-w-[150px]" onClick={props.onClick}>
+          <p>{props.btnText}</p>
+        </Button>
+      </CardBody>
+    </Card>
+  );
 }

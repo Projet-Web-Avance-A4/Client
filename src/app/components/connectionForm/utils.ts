@@ -1,3 +1,5 @@
+import { User } from '@/app/Interfaces/user';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import { useState, useEffect } from 'react';
 import React from 'react';
 
@@ -26,21 +28,21 @@ export const handleSubmit = async (
     setAlertType: (type: 'success' | 'error') => void
 ) => {
     e.preventDefault();
+    const appRole = process.env.NEXT_PUBLIC_APP;
     try {
-        const response = await fetch('http://localhost:3001/api/auth/login', {
+        const response = await fetch('http://localhost:4000/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ mail, password })
+            body: JSON.stringify({ mail, password, appRole })
         });
 
         if (response.status === 200) {
             const { accessToken, refreshToken } = await response.json();
             localStorage.setItem('accessToken', accessToken);
             localStorage.setItem('refreshToken', refreshToken);
-
-            window.location.href = '/main';
+            window.location.href = 'accueil'
         } else {
             setAlertMessage('Échec de la connexion au compte');
             setAlertType('error');

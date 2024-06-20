@@ -1,13 +1,13 @@
 import { Address } from "./address";
 
 export interface Customer {
-    id_customer : number;
+    customer_id : number;
 
-    name_customer : string;
+    name : string;
 
-    email_customer : string;
+    email : string;
 
-    phone_customer : number;
+    phone : number;
 
-    address_customer : Address;
+    address : Address;
 }

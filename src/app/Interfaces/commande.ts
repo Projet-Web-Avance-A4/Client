@@ -5,7 +5,7 @@ import { Payment } from "./payment";
 import { Restaurant } from "./restaurant";
 
 export interface Commande {
-    id_order: number;
+    order_id: number;
 
     customer : Customer;
 
@@ -13,13 +13,11 @@ export interface Commande {
 
     items : Item[];
 
-    price : number;
+    total_price : number;
 
-    status_order : string;
+    order_status : string;
 
     verification_code : number;
-
-    estimated_delivery_time : Date;
 
     payment : Payment;
 

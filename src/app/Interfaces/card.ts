@@ -9,7 +9,8 @@ export interface iCustomCard {
     description?: string
     href: string
     btnText: string
-  }
+    onClick?: () => void;
+}
 
 export interface ComponentListProps {
     components: string[];
