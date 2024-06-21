@@ -1,19 +1,24 @@
 "use client";
 
 import { Button, Card, CardBody, CardFooter, CardHeader, Divider, Image, Link } from "@nextui-org/react";
-import { Article } from "@/app/Interfaces/article";
-import { NextUIProvider } from "@nextui-org/system";
-import Header from "@/app/components/Header/header";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { CartContext } from "../contexts/cart.context";
+import { useHeader } from "../contexts/header.context";
+import { Article } from "../Interfaces/article";
 
 const ArticlesPage = () => {
     const [articleList, setArticleList] = useState<Article[]>([]);
 
+    const { setShowMyAccount } = useHeader();
+
     useEffect(() => {
-        fetch('http://localhost:3001/api/articles')
+        setShowMyAccount(true);
+    }, [setShowMyAccount]);
+
+    useEffect(() => {
+        fetch('http://localhost:4000/product/article')
             .then((response) => response.json())
             .then((data) => {
-                console.log(data);
                 setArticleList(data);
             })
             .catch((err) => {
@@ -21,17 +26,22 @@ const ArticlesPage = () => {
             });
     }, []);
 
+    const { addToCart } = useContext(CartContext);
+
+    const handleAddToCart = (article: Article) => {
+        addToCart(article);
+    };
+
+
     return (
-        <NextUIProvider>
-            <Header />
-            <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '16px', marginTop: '10px' }}>
+            <div>
                 {articleList.map((article: Article) => (
-                    <Card key={article.id_article} className="max-w-[300px]" style={{ flex: '1 1 calc(33.333% - 16px)', boxSizing: 'border-box' }}>
+                    <Card key={article.id_article} className="max-w-[300px]">
                         <CardHeader style={{ display: 'flex', justifyContent: 'center' }}>
                             <p className="text-md">{article.name_article}</p>
                         </CardHeader>
                         <Divider />
-                        <CardBody style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                        <CardBody>
                             <Image
                                 alt="menu logo"
                                 radius="sm"
@@ -41,17 +51,14 @@ const ArticlesPage = () => {
                         </CardBody>
                         <Divider />
                         <CardFooter>
-                            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-                                <p style={{ flex: '0 0 50%', margin: 0, textAlign: 'center' }}>{article.price_article} €</p>
-                                <Button color="primary" style={{ flex: '0 0 50%', margin: 0 }}>
-                                    Sélectionner
-                                </Button>
-                            </div>
+                        <div className="flex justify-center items-center w-full">
+                                <p>{article.price_article} €</p>
+                                <Button onClick={() => handleAddToCart(article)}>Add to Cart</Button>
+                        </div>
                         </CardFooter>
                     </Card>
                 ))}
             </div>
-        </NextUIProvider >
     );
 }
 
