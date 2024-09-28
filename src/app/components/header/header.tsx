@@ -57,14 +57,14 @@ export default function Header() {
                                 {cart.map((product) => (
                                     'name_article' in product ? (
                                         <DropdownItem key={product.id_article}>
-                                            <p>{(product as Article).name_article} : </p>
+                                            <p className='text-black'>{(product as Article).name_article} : </p>
                                             <Button onClick={() => handleRemoveFromCart(product)}>
                                                 <FaTrashCan />
                                             </Button>
                                         </DropdownItem>
                                     ) : (
                                         <DropdownItem key={product.id_menu}>
-                                            <p>{(product as Menu).name_menu}</p>
+                                            <p className='text-black'>{(product as Menu).name_menu}</p>
                                             <Button onClick={() => handleRemoveFromCart(product)}>
                                                 <FaTrashCan />
                                             </Button>
